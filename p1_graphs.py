@@ -44,7 +44,7 @@ def plot_data_histogram(df, filename, xvar):
 
     # clear days
     g = ggplot(df, aes(x=xvar)) + geom_histogram(fill='#2196F3', binwidth=100) + ggtitle('NYC Hourly Ridership Rain Days') \
-        + xlab('Entries Hourly') + scale_y_continuous(limits=[0, 10000], labels='thousand', breaks='1 thousand') + scale_x_continuous(limits=[0, 25000])
+        + xlab('Entries Hourly') + scale_y_continuous(limits=[0, 2000], labels='thousand', breaks='1 thousand') + scale_x_continuous(limits=[0, 12000])
 
 
     ggsave(g, filename)
