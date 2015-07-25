@@ -43,8 +43,12 @@ def plot_data_histogram(df, filename, xvar):
     #g = ggplot(df, aes(x=xvar)) + geom_histogram(fill='#2196F3', binwidth=2000) + ggtitle('NYC Hourly Ridership Rainy Days') + xlab('Entries Hourly')
 
     # clear days
-    g = ggplot(df, aes(x=xvar)) + geom_histogram(fill='#2196F3', binwidth=100) + ggtitle('NYC Hourly Ridership Rain Days') \
-        + xlab('Entries Hourly') + scale_y_continuous(limits=[0, 2000], labels='thousand', breaks='1 thousand') + scale_x_continuous(limits=[0, 12000])
+    g = ggplot(df, aes(x=xvar)) + geom_histogram(fill='#FF9800', binwidth=75) + ggtitle('NYC Hourly Ridership Clear Days') \
+        + xlab('Entries Hourly') + scale_y_continuous(limits=[0, 1100]) + scale_x_continuous(limits=[0, 15000])
+
+#colors
+    #FF9800 or
+    #2196F3 bl
 
 
     ggsave(g, filename)
@@ -73,16 +77,17 @@ clear_days = data[data['rain'] == 0]
 
 # Allowed dates to even out Histogram comparison
 allowed_clear = ['05-01-11',
-                 '05-02-11',
+                 '05-07-11',
                  '05-03-11',
                  '05-05-11',
                  '05-06-11',
-                 '05-09-11',
-                 '05-10-11',
-                 '05-11-11',
-                 '05-12-11',
-                 '05-13-11']
+                 '05-22-11',
+                 '05-28-11',
+                 '05-24-11',
+                 '05-30-11',
+                 '05-18-11']
 
+#print Series(clear_days.DATEn.ravel()).unique()
 clear_days = clear_days[clear_days.DATEn.isin(allowed_clear)]
 
 # drop NaN / Reset index for histogram call
@@ -100,10 +105,10 @@ clear_days = clear_days.dropna().reset_index(drop=True)
 ############
 
 # rain days hist save
-plot_data_histogram(rain_days, 'rain_days_blue.png', 'ENTRIESn_hourly')
+#plot_data_histogram(rain_days, 'rain_days_blue.png', 'ENTRIESn_hourly')
 
 # clear days hist save
-#plot_data_histogram(clear_days, 'clear_days_or.png', 'ENTRIESn_hourly')
+plot_data_histogram(clear_days, 'clear_days_or.png', 'ENTRIESn_hourly')
 
 #data = pandas.melt(data, id_vars=['datetime', 'ENTRIESn_hourly', 'rain'])
 
