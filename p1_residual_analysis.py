@@ -10,9 +10,11 @@ __buildCode__ = 'Udacity_P1.p1_residual_analysis.JC.2015.08.13.12'
 
 
 #import required libraries
+from scipy import stats
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
+import matlab.pyplot as pp
 
 
 
@@ -64,5 +66,56 @@ This function is based on the Udacity Intro to Data Science Problem Set 3.5 Code
 @since 2015.08.13
 
 @param dataframe :: pandas dataframe | dataset :: This is the dataframe of the NYC Data
+
+@return: predictions :: array (test for type)
 '''
-def predictions(dataframe)
+def predictions(dataframe):
+
+    '''
+    The below model was used in my P1 Submission, and will be left untouched.
+
+    This re-implementation is to test the residuals as an assessment of the fit of linear regression on the data.
+    '''
+
+    features = dataframe[['rain', 'precipi', 'Hour', 'mintempi', 'maxtempi', 'meanwindspdi', 'meandewpti']]
+    dummy_units = pandas.get_dummies(dataframe['UNIT'], prefix='unit')
+    features = features.join(dummy_units)
+
+    # Values
+    values = dataframe['ENTRIESn_hourly']
+
+    # Perform linear regression
+    intercept, params = linear_regression(features, values)
+
+    predictions = intercept + np.dot(features, params)
+
+    return predictions
+
+
+
+
+def residual_analysis_cyclic(predictedData, actualData):
+    '''
+    This function displays a representation of the fit of the linear regression model on the data
+
+    @since 2015.08.13
+    @param predictedData: pandas dataframe :: This is the dataframe of the predicted data from predictions()
+    @param actualData: pandas dataframe :: This is the dataframe of the actual data to compare to the predictions
+
+    :return: Returns True at end of process
+    '''
+    plt = pp.plot(actualData - predictedData)
+    plt.show()
+
+    return True
+
+
+def residual_analysis_QQ( predictedData ):
+
+    x = predictedData #array of SD?
+
+    res = stats.probplot(x, plot=pp)
+
+    #Show Q-Q Plot
+    res.show()
+
