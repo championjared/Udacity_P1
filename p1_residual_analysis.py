@@ -14,7 +14,7 @@ from scipy import stats
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-import matplotlib.pyplot as pp
+import matplotlib.pyplot as plt
 
 
 '''
@@ -99,7 +99,7 @@ def predictions(dataframe):
 
     predictions = intercept + np.dot(features, params)
 
-    return predictions
+    return predictions, values
 
 
 
@@ -114,7 +114,7 @@ def residual_analysis_cyclic(predictedData, actualData):
 
     :return: Returns True at end of process
     '''
-    plt = pp.plot(actualData - predictedData)
+    plt.plot(actualData - predictedData)
     plt.show()
 
     return True
@@ -124,10 +124,16 @@ def residual_analysis_QQ( predictedData ):
 
     x = predictedData #array of SD?
 
-    res = stats.probplot(x, plot=pp)
+    res = stats.probplot(x, plot=plt)
 
     #Show Q-Q Plot
-    res.show()
+    plt.show()
 
 
-inputData = load_csv('p1-data.csv')
+inputData = load_csv('p1-data-v2.csv')
+
+predictedData, trueData = predictions(inputData)
+
+
+#residual_analysis_cyclic(predictedData, trueData)
+residual_analysis_QQ(predictedData)
