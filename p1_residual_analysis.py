@@ -14,9 +14,11 @@ from scipy import stats
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-import matlab.pyplot as pp
+import matplotlib.pyplot as pp
+import os #for testing
 
 
+__dir__ = os.path.dirname(os.path.realpath(__file__)) + '\\'
 
 
 '''
@@ -118,4 +120,5 @@ def residual_analysis_QQ( predictedData ):
 
     #Show Q-Q Plot
     res.show()
+
 
