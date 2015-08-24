@@ -15,11 +15,19 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 import matplotlib.pyplot as pp
-import os #for testing
 
 
-__dir__ = os.path.dirname(os.path.realpath(__file__)) + '\\'
+'''
+This function loads the data for analysis
+@since 2015.08.24
 
+@param csv_f_path :: string :: path to csv file
+'''
+def load_csv(csv_f_path):
+    f = open(csv_f_path)
+    csv_data = pd.read_csv(f)
+
+    return csv_data
 
 '''
 This function performs the linear regression model on the data. It is used by predictions()
@@ -80,7 +88,7 @@ def predictions(dataframe):
     '''
 
     features = dataframe[['rain', 'precipi', 'Hour', 'mintempi', 'maxtempi', 'meanwindspdi', 'meandewpti']]
-    dummy_units = pandas.get_dummies(dataframe['UNIT'], prefix='unit')
+    dummy_units = pd.get_dummies(dataframe['UNIT'], prefix='unit')
     features = features.join(dummy_units)
 
     # Values
@@ -122,3 +130,4 @@ def residual_analysis_QQ( predictedData ):
     res.show()
 
 
+inputData = load_csv('p1-data.csv')
